@@ -39,9 +39,9 @@ test("answers survive leaving the lesson", async ({ page }) => {
 test("a wrong answer can be tried again and raises the score", async ({ page }) => {
   await page.goto(URL);
   await page.waitForSelector(".exq");
-  let ex = await answerFirst(page, 0);             // wrong
+  const ex = await answerFirst(page, 0);           // wrong
   await ex.locator(".js-retry").click();
-  ex = await answerFirst(page, 1);                 // right
+  await answerFirst(page, 1);                      // right
   await expect(page.locator("#lessonScore")).toHaveText(/^1\//);
   await expect(page.locator(".exq").first().locator(".js-retry")).toHaveCount(0);
 });
