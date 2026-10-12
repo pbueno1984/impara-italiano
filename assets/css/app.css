@@ -759,21 +759,22 @@ table.gt .it{font-weight:700;color:var(--salvia-deep);}
 .vocab-card__star[aria-pressed="true"]{background:var(--oro);border-color:var(--oro-deep);}
 
 /* dialogo */
-.dlg{display:flex;flex-direction:column;gap:10px;}
-.dlg__line{display:flex;gap:10px;align-items:flex-start;max-width:88%;}
+.dlg{display:flex;flex-direction:column;gap:5px;}
+.dlg__line{display:flex;gap:6px;align-items:flex-start;max-width:88%;}
 .dlg__line--b{align-self:flex-end;flex-direction:row-reverse;text-align:right;}
 .dlg__who{
-  flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;
-  background:var(--rosa);font-size:.9rem;border:1.5px solid var(--line-strong);
+  flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:var(--rosa);font-size:.75rem;border:1.5px solid var(--line-strong);
 }
 .dlg__line--b .dlg__who{background:var(--salvia);}
 .dlg__bubble{
   background:var(--paper-2);border:1.5px solid var(--line);
-  border-radius:var(--r-m);padding:10px 15px;
+  border-radius:var(--r-m);padding:5px 11px;line-height:1.35;
 }
 .dlg__line--b .dlg__bubble{background:var(--paper-3);}
 .dlg__it{font-weight:600;display:block;}
-.dlg__pl{font-size:.84rem;color:var(--ink-soft);display:block;margin-top:2px;}
+.dlg__pl{font-size:.8rem;color:var(--ink-soft);display:block;margin-top:1px;}
+.dlg .say-btn{width:24px;height:24px;flex-basis:24px;font-size:.68rem;}
 
 /* Wybór repliki w dialogu rozgałęzionym. Kolumna, nie rząd: obie możliwości
    są całymi zdaniami i przy dwóch kolumnach na telefonie łamią się na czwarte
