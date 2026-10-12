@@ -70,7 +70,7 @@ LINGUAI.addUI("en", {
   "lesson.back": "← Path",
   "lesson.retry": "Try again",
   "lesson.answeredBefore": "You answered this exercise on an earlier visit.",
-  "lesson.unitOf": "{level} · Unit {n} of {total}",
+  "lesson.unitOf": "{level} · Unit {n} of {total} · Part {part} of {parts}",
   "lesson.notFound": "Lesson not found",
   "lesson.notFoundHint": "Head back to the learning path.",
   "lesson.objectives": "By the end of this lesson you'll be able to:",

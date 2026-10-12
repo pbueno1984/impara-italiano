@@ -73,7 +73,7 @@ LINGUAI.addUI("pl", {
   "lesson.back": "← Ścieżka",
   "lesson.retry": "Spróbuj jeszcze raz",
   "lesson.answeredBefore": "To ćwiczenie zostało już rozwiązane podczas poprzedniej wizyty.",
-  "lesson.unitOf": "{level} · Jednostka {n} z {total}",
+  "lesson.unitOf": "{level} · Jednostka {n} z {total} · Część {part} z {parts}",
   "lesson.notFound": "Nie znaleziono lekcji",
   "lesson.notFoundHint": "Wróć do ścieżki nauki.",
   "lesson.objectives": "Po tej lekcji będziesz umieć:",

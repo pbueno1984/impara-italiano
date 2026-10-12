@@ -54,13 +54,16 @@
     });
 
     var parts = [];
+    var parts_ = (U.lessons || []).concat(U.test ? [U.test] : []);   // the unit's lessons, then its test
 
     parts.push('<div class="lesson-top">' +
       '<button class="btn btn--ghost btn--sm js-back">' + t("lesson.back") + "</button>" +
       '<span class="lesson-top__where">' + esc(t("lesson.unitOf", {
         level: LV.code,
-        n: String(LV.units.indexOf(U) + 1).padStart(2, "0"),
-        total: String(LV.units.length).padStart(2, "0")
+        n: LV.units.indexOf(U) + 1,
+        total: LV.units.length,
+        part: parts_.indexOf(L) + 1,
+        parts: parts_.length
       })) + "</span>" +
       '<div class="lesson-top__bar"><i id="lessonBar" style="width:' + pct(session.total ? session.answered / session.total : 0) + '%"></i></div>' +
       '<span class="lesson-top__hearts" id="lessonScore">' + session.score + "/" + session.total + "</span></div>");

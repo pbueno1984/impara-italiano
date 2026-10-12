@@ -76,7 +76,7 @@ LINGUAI.addUI("fr", {
   "lesson.back": "← Parcours",
   "lesson.retry": "Réessayer",
   "lesson.answeredBefore": "Tu as déjà répondu à cet exercice lors d'une visite précédente.",
-  "lesson.unitOf": "{level} · Unité {n} sur {total}",
+  "lesson.unitOf": "{level} · Unité {n} sur {total} · Partie {part} sur {parts}",
   "lesson.notFound": "Leçon introuvable",
   "lesson.notFoundHint": "Retourne au parcours.",
   "lesson.objectives": "À la fin de cette leçon, tu sauras :",

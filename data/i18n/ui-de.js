@@ -75,7 +75,7 @@ LINGUAI.addUI("de", {
   "lesson.back": "← Lernpfad",
   "lesson.retry": "Noch einmal versuchen",
   "lesson.answeredBefore": "Diese Übung hast du bei einem früheren Besuch schon beantwortet.",
-  "lesson.unitOf": "{level} · Einheit {n} von {total}",
+  "lesson.unitOf": "{level} · Einheit {n} von {total} · Teil {part} von {parts}",
   "lesson.notFound": "Lektion nicht gefunden",
   "lesson.notFoundHint": "Geh zurück zum Lernpfad.",
   "lesson.objectives": "Am Ende dieser Lektion kannst du:",
