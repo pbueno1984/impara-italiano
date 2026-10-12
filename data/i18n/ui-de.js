@@ -73,6 +73,7 @@ LINGUAI.addUI("de", {
 
   /* ---------------- Lektion ---------------- */
   "lesson.back": "← Lernpfad",
+  "lesson.unitOf": "{level} · Einheit {n} von {total}",
   "lesson.notFound": "Lektion nicht gefunden",
   "lesson.notFoundHint": "Geh zurück zum Lernpfad.",
   "lesson.objectives": "Am Ende dieser Lektion kannst du:",

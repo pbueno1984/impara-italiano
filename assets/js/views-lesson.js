@@ -49,6 +49,11 @@
 
     parts.push('<div class="lesson-top">' +
       '<button class="btn btn--ghost btn--sm js-back">' + t("lesson.back") + "</button>" +
+      '<span class="lesson-top__where">' + esc(t("lesson.unitOf", {
+        level: LV.code,
+        n: String(LV.units.indexOf(U) + 1).padStart(2, "0"),
+        total: String(LV.units.length).padStart(2, "0")
+      })) + "</span>" +
       '<div class="lesson-top__bar"><i id="lessonBar" style="width:0%"></i></div>' +
       '<span class="lesson-top__hearts" id="lessonScore">0/' + session.total + "</span></div>");
 

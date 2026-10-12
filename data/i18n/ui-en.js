@@ -68,6 +68,7 @@ LINGUAI.addUI("en", {
 
   /* ---------------- Lesson ---------------- */
   "lesson.back": "← Path",
+  "lesson.unitOf": "{level} · Unit {n} of {total}",
   "lesson.notFound": "Lesson not found",
   "lesson.notFoundHint": "Head back to the learning path.",
   "lesson.objectives": "By the end of this lesson you'll be able to:",

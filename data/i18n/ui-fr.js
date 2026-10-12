@@ -74,6 +74,7 @@ LINGUAI.addUI("fr", {
 
   /* ---------------- Leçon ---------------- */
   "lesson.back": "← Parcours",
+  "lesson.unitOf": "{level} · Unité {n} sur {total}",
   "lesson.notFound": "Leçon introuvable",
   "lesson.notFoundHint": "Retourne au parcours.",
   "lesson.objectives": "À la fin de cette leçon, tu sauras :",

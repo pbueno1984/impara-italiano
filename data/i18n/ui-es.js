@@ -74,6 +74,7 @@ LINGUAI.addUI("es", {
 
   /* ---------------- Lección ---------------- */
   "lesson.back": "← Ruta",
+  "lesson.unitOf": "{level} · Unidad {n} de {total}",
   "lesson.notFound": "Lección no encontrada",
   "lesson.notFoundHint": "Vuelve a la ruta de aprendizaje.",
   "lesson.objectives": "Al terminar esta lección sabrás:",

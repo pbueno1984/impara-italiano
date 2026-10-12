@@ -664,6 +664,7 @@ button{font:inherit;color:inherit;}
 }
 .lesson-top__bar{flex:1;height:12px;border-radius:var(--r-pill);background:var(--paper-sunk);overflow:hidden;border:1px solid var(--line);}
 .lesson-top__bar i{display:block;height:100%;background:linear-gradient(90deg,var(--salvia-mid),var(--salvia-deep));border-radius:var(--r-pill);transition:width .35s ease;}
+.lesson-top__where{flex:0 0 auto;font-weight:700;font-size:.9rem;color:var(--salvia-deep);white-space:nowrap;}
 .lesson-top__hearts{font-size:1rem;letter-spacing:2px;flex:0 0 auto;}
 
 .step{margin-bottom:34px;}
