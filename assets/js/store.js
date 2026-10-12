@@ -56,6 +56,9 @@
          year and nobody can give it back. */
       reviews: [],
       errors: {},         // exercise key -> mistake card
+      /* Answers of a lesson left halfway: lesson id -> {exercise index: 1 ok / 0 wrong}.
+         Container ADDED, the schema does not move. Cleared when the lesson is recorded. */
+      partial: {},
       /* There used to be a `gsrs` here — a schedule per grammar topic.
          Declared together with the adaptive engine and never written or
          read by anyone; the only thing touching it was a test that filled

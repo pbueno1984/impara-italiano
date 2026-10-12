@@ -74,6 +74,8 @@ LINGUAI.addUI("fr", {
 
   /* ---------------- Leçon ---------------- */
   "lesson.back": "← Parcours",
+  "lesson.retry": "Réessayer",
+  "lesson.answeredBefore": "Tu as déjà répondu à cet exercice lors d'une visite précédente.",
   "lesson.unitOf": "{level} · Unité {n} sur {total}",
   "lesson.notFound": "Leçon introuvable",
   "lesson.notFoundHint": "Retourne au parcours.",

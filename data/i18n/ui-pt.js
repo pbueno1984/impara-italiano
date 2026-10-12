@@ -74,6 +74,8 @@ LINGUAI.addUI("pt", {
 
   /* ---------------- Lição ---------------- */
   "lesson.back": "← Trilha",
+  "lesson.retry": "Tentar de novo",
+  "lesson.answeredBefore": "Você já respondeu este exercício numa visita anterior.",
   "lesson.unitOf": "{level} · Unidade {n} de {total}",
   "lesson.notFound": "Lição não encontrada",
   "lesson.notFoundHint": "Volte para a trilha de aprendizado.",

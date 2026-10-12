@@ -44,6 +44,14 @@
     var L = found.lesson, U = found.unit, LV = found.level;
 
     session = { id: L.id, total: (L.exercises || []).length, score: 0, answered: 0, started: Date.now() };
+    /* Answers from a visit left halfway come back: the counter resumes and
+       those exercises show as done, so leaving a lesson never wipes it. */
+    var saved = Core.state.partial[L.id] || {};
+    Object.keys(saved).forEach(function (i) {
+      if (+i >= session.total) return;
+      session.answered += 1;
+      session.score += saved[i];
+    });
 
     var parts = [];
 
@@ -54,8 +62,8 @@
         n: String(LV.units.indexOf(U) + 1).padStart(2, "0"),
         total: String(LV.units.length).padStart(2, "0")
       })) + "</span>" +
-      '<div class="lesson-top__bar"><i id="lessonBar" style="width:0%"></i></div>' +
-      '<span class="lesson-top__hearts" id="lessonScore">0/' + session.total + "</span></div>");
+      '<div class="lesson-top__bar"><i id="lessonBar" style="width:' + pct(session.total ? session.answered / session.total : 0) + '%"></i></div>' +
+      '<span class="lesson-top__hearts" id="lessonScore">' + session.score + "/" + session.total + "</span></div>");
 
     parts.push('<div class="meta-row">' +
       '<span class="chip chip--cefr">' + esc(L.cefr || LV.code) + "</span>" +
@@ -199,15 +207,66 @@
       wrap.innerHTML = built.map(function (b) { return b.html; }).join("");
       var nodes = wrap.querySelectorAll(".exq");
       built.forEach(function (b, i) {
-        b.wire(nodes[i], function (ok) { onAnswer(ok, L, U, LV); });
+        if (i in saved) {
+          markSaved(nodes[i], saved[i]);
+          if (!saved[i]) addRetry(nodes[i], L, U, LV, i);
+          return;
+        }
+        b.wire(nodes[i], function (ok) {
+          onAnswer(ok, L, U, LV, i);
+          if (!ok && !session.ended) addRetry(nodes[i], L, U, LV, i);
+        });
       });
       Ex.wireSpeakers(wrap);
     }
   };
 
-  function onAnswer(ok, L, U, LV) {
+  /** An exercise answered on an earlier visit: shown as done, not wired. */
+  function markSaved(node, ok) {
+    node.classList.add(ok ? "exq--ok" : "exq--ko");
+    node.querySelectorAll("input, select, textarea, button:not(.say-btn)").forEach(function (c) { c.disabled = true; });
+    var btn = node.querySelector(".js-check");
+    if (btn) btn.textContent = t(ok ? "ex.done.ok" : "ex.done.checked");
+    var fb = node.querySelector(".fb");
+    if (fb) { fb.className = "fb is-on " + (ok ? "fb--ok" : "fb--ko"); fb.textContent = t("lesson.answeredBefore"); }
+  }
+
+  /* A wrong answer already counts as done (the counter moved on), but the
+     exercise is not a dead end: it can be tried again, and a right second
+     try raises the score. Only until the lesson is recorded — after that,
+     "repeat the lesson" is the way back. */
+  function addRetry(node, L, U, LV, i) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn btn--ghost btn--sm js-retry";
+    btn.style.marginTop = "10px";
+    btn.textContent = t("lesson.retry");
+    node.appendChild(btn);
+    btn.addEventListener("click", function () {
+      var b = Ex.build(L.exercises[i], i, L.id);
+      var tmp = document.createElement("div");
+      tmp.innerHTML = b.html;
+      var fresh = tmp.firstElementChild;
+      node.replaceWith(fresh);
+      b.wire(fresh, function (ok) {
+        if (ok && !session.ended) {
+          session.score += 1;
+          Core.state.partial[L.id][i] = 1;
+          Core.save();
+          var sc = document.getElementById("lessonScore");
+          if (sc) sc.textContent = session.score + "/" + session.total;
+        }
+        if (!ok && !session.ended) addRetry(fresh, L, U, LV, i);
+      });
+    });
+  }
+
+  function onAnswer(ok, L, U, LV, i) {
     session.answered += 1;
     if (ok) session.score += 1;
+    var part = Core.state.partial[L.id] || (Core.state.partial[L.id] = {});
+    part[i] = ok ? 1 : 0;
+    Core.save();
     var bar = document.getElementById("lessonBar");
     var sc = document.getElementById("lessonScore");
     if (bar) bar.style.width = pct(session.answered / session.total) + "%";
@@ -219,6 +278,9 @@
     }
 
     if (session.answered >= session.total) {
+      delete Core.state.partial[L.id];
+      session.ended = true;
+      document.querySelectorAll(".js-retry").forEach(function (b) { b.remove(); });
       var res = Core.recordLesson(L.id, session.score, session.total, (Date.now() - session.started) / 1000);
       renderLessonEnd(res, L, U, LV);
       App.refreshRail();
