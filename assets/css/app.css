@@ -684,6 +684,8 @@ button{font:inherit;color:inherit;}
 .step--ex .step__label::before{background:var(--salvia-mid);}
 
 .prose{max-width:68ch;}
+/* A card holding only prose hugs the text instead of leaving an empty strip on the right. */
+.card:has(> .prose:only-child){width:fit-content;max-width:100%;}
 .prose p{font-size:1.02rem;}
 .prose strong{color:var(--salvia-deep);font-weight:700;}
 .prose em{font-style:normal;font-weight:600;color:var(--lavanda-deep);}
