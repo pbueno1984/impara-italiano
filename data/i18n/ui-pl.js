@@ -143,6 +143,7 @@ LINGUAI.addUI("pl", {
   "ex.match.prompt": "Połącz włoskie wyrażenia z polskimi odpowiednikami.",
   "ex.match.mistakes": "Liczba pomyłek: {n}.",
   "ex.conj.prompt": "Odmień: {verb} — {tense}",
+  "ex.conj.drag": "Przeciągnij każdą formę do właściwej osoby (albo dotknij formy, a potem pola).",
   "ex.gender.prompt": "Dopasuj właściwy rodzajnik.",
   "ex.listen.prompt": "Posłuchaj i zapisz, co słyszysz.",
   "ex.listen.play": "🔊 Odtwórz",

@@ -145,6 +145,7 @@ LINGUAI.addUI("pt", {
   "ex.match.prompt": "Associe as expressões italianas ao seu significado em português.",
   "ex.match.mistakes": "Erros: {n}.",
   "ex.conj.prompt": "Conjugue: {verb} — {tense}",
+  "ex.conj.drag": "Arraste cada forma até a pessoa certa (ou toque na forma e depois no lugar).",
   "ex.gender.prompt": "Escolha o artigo correto.",
   "ex.listen.prompt": "Ouça e escreva o que ouvir.",
   "ex.listen.play": "🔊 Tocar",

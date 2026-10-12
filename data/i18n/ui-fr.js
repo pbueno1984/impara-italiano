@@ -145,6 +145,7 @@ LINGUAI.addUI("fr", {
   "ex.match.prompt": "Associe les expressions italiennes à leur sens en français.",
   "ex.match.mistakes": "Erreurs : {n}.",
   "ex.conj.prompt": "Conjugue : {verb} — {tense}",
+  "ex.conj.drag": "Glisse chaque forme vers sa personne (ou touche la forme, puis la case).",
   "ex.gender.prompt": "Choisis le bon article.",
   "ex.listen.prompt": "Écoute et écris ce que tu entends.",
   "ex.listen.play": "🔊 Lecture",

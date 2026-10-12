@@ -138,6 +138,7 @@ LINGUAI.addUI("en", {
   "ex.match.prompt": "Match the Italian phrases with their English meanings.",
   "ex.match.mistakes": "Mistakes: {n}.",
   "ex.conj.prompt": "Conjugate: {verb} — {tense}",
+  "ex.conj.drag": "Drag each form to its person (or tap the form, then the slot).",
   "ex.gender.prompt": "Pick the right article.",
   "ex.listen.prompt": "Listen and write down what you hear.",
   "ex.listen.play": "🔊 Play",

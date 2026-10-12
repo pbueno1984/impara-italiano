@@ -857,8 +857,16 @@ textarea.field{max-width:min(720px, 100%);line-height:1.7;font-weight:500;resize
 
 /* conjugation grid */
 .conj-grid{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;align-items:center;max-width:460px;}
-.conj-grid label{font-weight:600;color:var(--ink-soft);}
-.conj-grid .field{max-width:100%;min-height:44px;}
+.conj-person{font-weight:600;color:var(--ink-soft);}
+.conj-slot{
+  min-height:44px;border:2px dashed var(--line-strong);border-radius:var(--r-m);
+  background:var(--paper-3);padding:2px;display:flex;align-items:center;cursor:pointer;font:inherit;font-weight:600;color:var(--ink);text-align:left;
+}
+.conj-slot:empty:hover{border-color:var(--salvia-deep);}
+.conj-slot .tok{min-height:36px;}
+.conj-slot--ok{border-style:solid;border-color:var(--ok);}
+.conj-slot--ko{border-style:solid;border-color:var(--ko);padding:8px 14px;}
+.tok[aria-pressed="true"]{border-color:var(--salvia-deep);background:var(--salvia);}
 
 /* voice */
 .voice-box{

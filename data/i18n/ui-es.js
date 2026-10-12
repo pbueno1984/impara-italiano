@@ -145,6 +145,7 @@ LINGUAI.addUI("es", {
   "ex.match.prompt": "Empareja las expresiones italianas con su significado en español.",
   "ex.match.mistakes": "Errores: {n}.",
   "ex.conj.prompt": "Conjuga: {verb} — {tense}",
+  "ex.conj.drag": "Arrastra cada forma a su persona (o toca la forma y luego el hueco).",
   "ex.gender.prompt": "Elige el artículo correcto.",
   "ex.listen.prompt": "Escucha y escribe lo que oigas.",
   "ex.listen.play": "🔊 Reproducir",

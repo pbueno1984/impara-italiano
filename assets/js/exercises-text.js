@@ -148,36 +148,88 @@
     return { html: html, wire: wire };
   }
 
-  /* ═══════════════ CONJ (conjugation table) ═══════════════ */
-  function buildConj(ex, idx) {
+  /* ═══════════════ CONJ (conjugation table) ═══════════════
+     The forms are given as tiles and the student drags each one onto its
+     person. Dragging is the mouse path; a tap on a tile and then on a slot
+     does the same on a phone or with the keyboard (HTML5 drag does not
+     exist on touch screens). Tiles are matched by text, not identity:
+     essere has "sono" twice and either tile fits either slot. */
+  function buildConj(ex, idx, seed) {
     // ex.verb, ex.tense (a key from Verbs.TENSES), ex.persons: the indexes to fill in
     var forms = Verbs.conjugate(ex.verb, ex.tense || "pres");
     // the imperative has no "io" form — we skip the persons without one
     var which = (ex.persons || [0, 1, 2, 3, 4, 5]).filter(function (p) { return !!forms[p]; });
     var tenseLabel = (Verbs.TENSES.filter(function (x) { return x.key === (ex.tense || "pres"); })[0] || {}).labelIt;
+    var tiles = Core.seededShuffle(which.map(function (p) { return forms[p]; }), seed + "c" + idx);
 
     var rows = which.map(function (p) {
-      return '<label for="c' + idx + "_" + p + '">' + esc(Verbs.PERSONS[p]) + "</label>" +
-        '<input id="c' + idx + "_" + p + '" class="field js-cell" data-p="' + p + '" autocomplete="off" spellcheck="false">';
+      return '<span class="conj-person">' + esc(Verbs.PERSONS[p]) + "</span>" +
+        '<button type="button" class="conj-slot js-cell" data-p="' + p + '" aria-label="' + esc(Verbs.PERSONS[p]) + '"></button>';
     }).join("");
 
     var html = '<div class="exq" data-idx="' + idx + '">' + head(idx, ex) +
       '<p class="exq__prompt">' + t("ex.conj.prompt", { verb: '<b style="color:var(--salvia-deep)">' + esc(ex.verb) + "</b>", tense: esc(tenseLabel) }) + "</p>" +
+      '<p class="exq__sub">' + esc(t("ex.conj.drag")) + "</p>" +
       (ex.tr ? '<p class="exq__sub">' + esc(ex.tr) + "</p>" : "") +
       '<div class="conj-grid">' + rows + "</div>" +
+      '<div class="tok-bank js-bank" style="margin-top:14px">' + tiles.map(function (f) {
+        return '<button type="button" class="tok" draggable="true" aria-pressed="false">' + esc(f) + "</button>";
+      }).join("") + "</div>" +
       '<div style="margin-top:14px">' + checkBtn() + "</div>" + feedbackBox() + "</div>";
 
     function wire(root, onDone) {
+      var bank = root.querySelector(".js-bank");
+      var picked = null;   // the tile chosen by tap or the one being dragged
+      function locked() { return root.querySelector(".js-check").disabled; }
+      function pick(tok) {
+        if (picked) picked.setAttribute("aria-pressed", "false");
+        picked = tok;
+        if (tok) tok.setAttribute("aria-pressed", "true");
+      }
+      function drop(slot) {
+        if (!picked || locked()) return;
+        var old = slot.querySelector(".tok");
+        if (old) bank.appendChild(old);
+        picked.setAttribute("aria-pressed", "false");
+        slot.appendChild(picked);
+        picked = null;
+      }
+
+      root.addEventListener("click", function (e) {
+        if (locked()) return;
+        var tok = e.target.closest(".tok");
+        var slot = e.target.closest(".js-cell");
+        if (tok && slot) { bank.appendChild(tok); pick(null); return; }   // a placed tile goes back
+        if (tok) { pick(picked === tok ? null : tok); return; }
+        if (slot) drop(slot);
+      });
+      root.addEventListener("dragstart", function (e) {
+        var tok = e.target.closest(".tok");
+        if (!tok || locked()) return;
+        pick(tok);
+        e.dataTransfer.setData("text/plain", tok.textContent);
+      });
+      root.addEventListener("dragover", function (e) {
+        if (e.target.closest(".js-cell, .js-bank")) e.preventDefault();
+      });
+      root.addEventListener("drop", function (e) {
+        var slot = e.target.closest(".js-cell");
+        e.preventDefault();
+        if (slot) drop(slot);
+        else if (picked && e.target.closest(".js-bank")) { bank.appendChild(picked); pick(null); }
+      });
+
       root.querySelector(".js-check").addEventListener("click", function () {
         var allOk = true;
-        root.querySelectorAll(".js-cell").forEach(function (inp) {
-          var p = parseInt(inp.getAttribute("data-p"), 10);
+        root.querySelectorAll(".js-cell").forEach(function (slot) {
+          var p = parseInt(slot.getAttribute("data-p"), 10);
           var want = forms[p] || "";
-          var ok = Core.checkOpen(inp.value, [want], Core.state.settings.strictAccents).ok;
-          inp.style.borderColor = ok ? "var(--ok)" : "var(--ko)";
-          if (!ok) { allOk = false; inp.value = want; }
-          inp.disabled = true;
+          var ok = slot.textContent === want;
+          slot.classList.add(ok ? "conj-slot--ok" : "conj-slot--ko");
+          if (!ok) { allOk = false; slot.textContent = want; }
+          slot.disabled = true;
         });
+        root.querySelectorAll(".tok").forEach(function (b) { b.disabled = true; });
         finish(root, allOk, ex.why, null, onDone);
       });
     }

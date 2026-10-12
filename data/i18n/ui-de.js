@@ -143,6 +143,7 @@ LINGUAI.addUI("de", {
   "ex.match.prompt": "Ordne den italienischen Ausdrücken ihre deutsche Bedeutung zu.",
   "ex.match.mistakes": "Fehler: {n}.",
   "ex.conj.prompt": "Konjugiere: {verb} — {tense}",
+  "ex.conj.drag": "Ziehe jede Form zur passenden Person (oder tippe die Form und dann das Feld an).",
   "ex.gender.prompt": "Wähl den richtigen Artikel.",
   "ex.listen.prompt": "Hör zu und schreib auf, was du hörst.",
   "ex.listen.play": "🔊 Abspielen",

@@ -131,9 +131,14 @@ async function odpowiedz(page, type, fixture, poprawnie) {
 
       case "conj": {
         const formy = window.Verbs.conjugate(ex.verb, ex.tense);
-        qq(".js-cell").forEach(inp => {
-          const p = parseInt(inp.getAttribute("data-p"), 10);
-          inp.value = dobrze ? formy[p] : ZLE;
+        /* Tiles, not typing: tap a tile, then its slot. "Wrong" reverses the
+           order, so every slot is filled and the forms land on the wrong person. */
+        const slots = qq(".js-cell");
+        const cel = slots.map(s => formy[parseInt(s.getAttribute("data-p"), 10)]);
+        if (!dobrze) cel.reverse();
+        slots.forEach((slot, i) => {
+          qq(".js-bank .tok").find(b => b.textContent === cel[i]).click();
+          slot.click();
         });
         check();
         break;
