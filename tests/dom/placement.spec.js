@@ -189,3 +189,20 @@ test("the test strings exist in five languages", async ({ page }) => {
   });
   expect(braki, JSON.stringify(braki)).toEqual({});
 });
+
+/* The lessons drag the conjugation tiles; the placement test keeps typing,
+   because tiles let a student who does not know the verb pass by elimination. */
+test("conjugation is typed in the placement test, dragged in lessons", async ({ page }) => {
+  await wejscie(page);
+  const r = await page.evaluate(() => {
+    const ex = { t: "conj", verb: "essere", tense: "pres", persons: [0, 1] };
+    return {
+      lesson: window.Ex.build(ex, 0, "s").html,
+      placement: window.Ex.build(Object.assign({}, ex, { typed: true }), 0, "s").html
+    };
+  });
+  expect(r.lesson).toContain('draggable="true"');
+  expect(r.lesson).not.toContain("<input");
+  expect(r.placement).toContain("<input");
+  expect(r.placement).not.toContain("draggable");
+});

@@ -160,6 +160,7 @@
     // the imperative has no "io" form — we skip the persons without one
     var which = (ex.persons || [0, 1, 2, 3, 4, 5]).filter(function (p) { return !!forms[p]; });
     var tenseLabel = (Verbs.TENSES.filter(function (x) { return x.key === (ex.tense || "pres"); })[0] || {}).labelIt;
+    if (ex.typed) return buildConjTyped(ex, idx, forms, which, tenseLabel);
     var tiles = Core.seededShuffle(which.map(function (p) { return forms[p]; }), seed + "c" + idx);
 
     var rows = which.map(function (p) {
@@ -230,6 +231,37 @@
           slot.disabled = true;
         });
         root.querySelectorAll(".tok").forEach(function (b) { b.disabled = true; });
+        finish(root, allOk, ex.why, null, onDone);
+      });
+    }
+    return { html: html, wire: wire };
+  }
+
+  /* The typed table: the placement test keeps it, because tiles let a
+     student who does not know the verb pass by elimination. */
+  function buildConjTyped(ex, idx, forms, which, tenseLabel) {
+    var rows = which.map(function (p) {
+      return '<label for="c' + idx + "_" + p + '">' + esc(Verbs.PERSONS[p]) + "</label>" +
+        '<input id="c' + idx + "_" + p + '" class="field js-cell" data-p="' + p + '" autocomplete="off" spellcheck="false">';
+    }).join("");
+
+    var html = '<div class="exq" data-idx="' + idx + '">' + head(idx, ex) +
+      '<p class="exq__prompt">' + t("ex.conj.prompt", { verb: '<b style="color:var(--salvia-deep)">' + esc(ex.verb) + "</b>", tense: esc(tenseLabel) }) + "</p>" +
+      (ex.tr ? '<p class="exq__sub">' + esc(ex.tr) + "</p>" : "") +
+      '<div class="conj-grid">' + rows + "</div>" +
+      '<div style="margin-top:14px">' + checkBtn() + "</div>" + feedbackBox() + "</div>";
+
+    function wire(root, onDone) {
+      root.querySelector(".js-check").addEventListener("click", function () {
+        var allOk = true;
+        root.querySelectorAll(".js-cell").forEach(function (inp) {
+          var p = parseInt(inp.getAttribute("data-p"), 10);
+          var want = forms[p] || "";
+          var ok = Core.checkOpen(inp.value, [want], Core.state.settings.strictAccents).ok;
+          inp.style.borderColor = ok ? "var(--ok)" : "var(--ko)";
+          if (!ok) { allOk = false; inp.value = want; }
+          inp.disabled = true;
+        });
         finish(root, allOk, ex.why, null, onDone);
       });
     }

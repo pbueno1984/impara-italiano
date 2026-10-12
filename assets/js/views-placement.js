@@ -88,7 +88,7 @@
       function zadanie() {
         if (i >= pula.length) { Placement.zapiszRunde(p, kod, dobre, pula.length); runda(); return; }
         var poz = pula[i];
-        var zbudowane = Ex.build(poz.ex, i, "place-" + kod);
+        var zbudowane = Ex.build(poz.ex.t === "conj" ? Object.assign({}, poz.ex, { typed: true }) : poz.ex, i, "place-" + kod);
 
         box.innerHTML = '<p class="exq__num">' +
           esc(t("place.progress", { i: p.zadane + i + 1, level: kod })) + "</p>" +
